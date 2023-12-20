@@ -1,0 +1,153 @@
+[
+    {
+        "id": "18344b3760372061",
+        "type": "tab",
+        "label": "Automated Meter Reading - with Automation",
+        "disabled": false,
+        "info": "**Demonstrates on how to use Node-RED to transmit high frequent meter readings to a utility as required for dynamic electricity tariffs.**\r\n\r\nUse tariff information provided to switch devices on/off.",
+        "env": []
+    },
+    {
+        "id": "dbbf0f980d0f24e6",
+        "type": "inject",
+        "z": "18344b3760372061",
+        "name": "Get Tariff Information",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "4beaa3462a1036d6"
+            ]
+        ]
+    },
+    {
+        "id": "db4537d3078e1451",
+        "type": "debug",
+        "z": "18344b3760372061",
+        "name": "Electricity Cost",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload.clearing.cost",
+        "targetType": "msg",
+        "statusVal": "payload.cost",
+        "statusType": "auto",
+        "x": 800,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2dafa293543c34b2",
+        "type": "SendReading",
+        "z": "18344b3760372061",
+        "name": "Send Reading",
+        "eafcredentials": "61662e8477efa535",
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "db4537d3078e1451"
+            ]
+        ]
+    },
+    {
+        "id": "4beaa3462a1036d6",
+        "type": "Tariff",
+        "z": "18344b3760372061",
+        "name": "Requect Prices",
+        "eafcredentials": "61662e8477efa535",
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "a58e41ef98100861"
+            ]
+        ]
+    },
+    {
+        "id": "94f3bd81eb7c67c0",
+        "type": "debug",
+        "z": "18344b3760372061",
+        "name": "Device On?",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 850,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a58e41ef98100861",
+        "type": "BestPrice",
+        "z": "18344b3760372061",
+        "name": "Only lowest price",
+        "periods": "1",
+        "x": 650,
+        "y": 200,
+        "wires": [
+            [
+                "94f3bd81eb7c67c0"
+            ]
+        ]
+    },
+    {
+        "id": "8d41207a9ceb73b9",
+        "type": "inject",
+        "z": "18344b3760372061",
+        "name": "Meter Reading  in Wh (here timestamp)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "2dafa293543c34b2"
+            ]
+        ]
+    },
+    {
+        "id": "61662e8477efa535",
+        "type": "eaf-credentials",
+        "baseUrl": "http://172.29.79.193:3001",
+        "meterId": "demo",
+        "activationSecret": "",
+        "readingToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXRlcklkIjoiZGVtbyIsImlhdCI6MTcwMzA4MDc1NCwiZXhwIjoxNzAzNjg1NTU0LCJhdWQiOiJodHRwczovL3RhcmlmZi5zdGFkdHdlcmstbXVzdGVyc3RhZHQuZGUiLCJpc3MiOiJTdGFkdHdlcmsgTXVzdGVyc3RhZHQiLCJzdWIiOiJFQUYifQ.NDIba5NdFJGk9HXPcxeRbkbXaj1aNhCNA4bDtj-QiUSRD7TDsmyRuSyWHXe_StXFlQeXQfivIVuyyMV9mwY_u-YLI4y3Pf19cr6AGx0Lsp4AiA9EH5MSbNxE067SMIpdyrjj_AhOf1lfTRP_NHnycdeJt7J0vtjiDVz2bs5k1hoJLJfIAx62J4DIFsxEv6no8V6JAYXsW6sB39TAJT-L1dxTnbrLjvuK207mNYC26FQJ4l-lM2yfdOGox30kVKr-9H0DHMuuM9-PV_htOPAzP8kSnUpXwuuOupOy3kU-7fMSr-ZX0LjJQPp_dwQ14AjsUVNBsT0d3RQwyIXocfsk7g",
+        "name": "Demo"
+    }
+]

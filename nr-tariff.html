@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Tariff',{
+        category: 'STROMDAO',
+        color: '#d0d0d0',
+        defaults: {
+            name: {value:""},
+            eafcredentials: {value:"", type:"eaf-credentials"}
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels:['Processed reading returned by utility.'], 
+        icon: "font-awesome/fa-money",
+        label: function() {
+            return this.name||"Tariff";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Tariff">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-eafcredentials"><i class="fa fa-tag"></i> Credentials</label>
+        <input type="text" id="node-input-eafcredentials" placeholder="">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="Tariff">
+    <p>Retrieves Tariff information from Utility</p>
+    <h3>Input</h3>
+    <p><code>msg.payload</code> ignored.</p>
+    <h3>Function</h3>
+    <p>Used meter credentials to fetch tariff from <a href="https://github.com/energychain/STROMDAO_EAFs">STROMDAO Energy Application Framework</a> metering service (API) of a utility for dynamic electricity tariffs.</p>
+    <h3>Output</h3>
+    <p><code>msg.payload</code> cryptographic validated result object with electricity price forecast.</p>
+</script>

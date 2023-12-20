@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    RED.nodes.registerType('BestPrice',{
+        category: 'STROMDAO',
+        color: '#d0d0d0',
+        defaults: {
+            name: {value:""},
+            periods: {value:1,required:true}
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels:['Switch (true/false) if best price at the moment'], 
+        inputLabels:['Output of Tariff node.'], 
+        icon: "font-awesome/fa-money",
+        label: function() {
+            return this.name||"BestPrice";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="BestPrice">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-periods"><i class="fa fa-tag"></i> Number of Periods</label>
+        <input type="number" id="node-input-periods" min="1" step="1" placeholder="(how many periods of lowest price to be true)">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="BestPrice">
+    <p>Might be used to turn a device on/off during times of lowest price in forecast</p>
+    <h3>Input</h3>
+    <p><code>msg.payload</code> as given from Tariff node.</p>
+    <h3>Function</h3>
+    <p>Sorts tariff array by price to find periods of lowest price.</p>
+    <h3>Output</h3>
+    <p><code>msg.payload</code> true if lowest price else false.</p>
+</script>

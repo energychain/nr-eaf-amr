@@ -1,0 +1,41 @@
+{
+  "name": "nr-eaf-amr",
+  "version": "0.2.1",
+  "description": "Automated Meter Reading client for STROMDAO Energy Application Framework",
+  "main": "lib.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/nr-eaf-amr.git"
+  },
+  "keywords": [
+    "node-red",
+    "amr",
+    "smartmeter",
+    "tariff",
+    "energy",
+    "stromdao"
+  ],
+  "author": "STROMDAO GmbH <dev@stromdao.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/energychain/nr-eaf-amr/issues"
+  },
+  "homepage": "https://github.com/energychain/nr-eaf-amr#readme",
+  "dependencies": {
+    "eaf-amr-client": "^0.2.3"
+  },
+  "node-red": {
+    "nodes": {
+        "SendReading": "nr-meterreading.js",
+        "Tariff": "nr-tariff.js",
+        "BestPrice": "nr-bestPrice.js",
+        "eaf-credentials": "eaf-credentials.js"
+    }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

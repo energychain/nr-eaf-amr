@@ -31,6 +31,7 @@
     <p>Send MeterReading to utility for settlement and clearing</p>
     <h3>Input</h3>
     <p><code>msg.payload</code> should be an integer number of the meter reading in WattHours (Wh).</p>
+    <p><code>msg.topic</code> if set it will overwrite the meterId of node configuration</p>
     <h3>Function</h3>
     <p>Signs and sends the meter reading to the <a href="https://github.com/energychain/STROMDAO_EAFs">STROMDAO Energy Application Framework</a> metering service (API) of a utility for high frequent settlement and clearing of dynamic electricity tariffs.</p>
     <h3>Output</h3>

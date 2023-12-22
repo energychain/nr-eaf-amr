@@ -23,7 +23,9 @@ module.exports = function(RED) {
                 if(typeof requestConfig.activationSecret == 'undefined') {
                     requestConfig.activationSecret = eafcredentials.activationSecret;
                 }
-
+                if((typeof msg.topic !== 'undefined') && (msg.topic !== null)) {
+                    requestConfig.meterId = msg.topic;
+                }
                 const instance = new EAC(requestConfig);
                 let res = await instance.updateReading(msg.payload);
                 node.context().set("consensus",instance.config);

@@ -8,6 +8,8 @@ module.exports = function(RED) {
             node.status({ fill: "yellow", shape: "dot", text: "Updating"});
             try {
                 let requestConfig = node.context().get("consensus");
+                requestConfig.meterId = eafcredentials.meterId;
+                
                 if((typeof requestConfig == 'undefined') || (requestConfig == null)){
                     requestConfig = {};
                 }

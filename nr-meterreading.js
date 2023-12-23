@@ -4,6 +4,7 @@ module.exports = function(RED) {
         const EAC = require("eaf-amr-client");
         const node = this;
         const eafcredentials =  RED.nodes.getNode(config.eafcredentials);
+        console.log("EAFC",eafcredentials);
         node.on('input', async function(msg) {
             node.status({ fill: "yellow", shape: "dot", text: "Updating"});
             try {
@@ -11,22 +12,21 @@ module.exports = function(RED) {
                 if((typeof requestConfig == 'undefined') || (requestConfig == null)){
                     requestConfig = {};
                 }
-                requestConfig.meterId = eafcredentials.meterId; //fixing #Issue1
-
                 if(typeof requestConfig.baseUrl == 'undefined') {
                     requestConfig.baseUrl = eafcredentials.baseUrl;
                 }
-                if(typeof requestConfig.meterId == 'undefined') {
+                if((typeof requestConfig.meterId == 'undefined')||(requestConfig.meterId == null)||(requestConfig.meterId == '')) {
                     requestConfig.meterId = eafcredentials.meterId;
                 }
+              
                 if(typeof requestConfig.readingToken == 'undefined') {
                     requestConfig.readingToken = eafcredentials.readingToken;
                 }
                 if(typeof requestConfig.activationSecret == 'undefined') {
                     requestConfig.activationSecret = eafcredentials.activationSecret;
                 }
-                if((typeof msg.topic !== 'undefined') && (msg.topic !== null)) {
-                    requestConfig.meterId = msg.topic;
+                if((typeof msg.topic !== 'undefined') && (msg.topic !== null) && (msg.topic !== '') && (msg.topic.length > 0)) {
+                    requestConfig.meterId = msg.topic; // This is the root cause of https://github.com/energychain/nr-eaf-amr/issues/1
                 }
                 const instance = new EAC(requestConfig);
                 let res = await instance.updateReading(msg.payload);

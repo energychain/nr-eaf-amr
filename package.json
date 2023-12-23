@@ -1,6 +1,6 @@
 {
   "name": "nr-eaf-amr",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Automated Meter Reading client for STROMDAO Energy Application Framework",
   "main": "lib.js",
   "scripts": {
